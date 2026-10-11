@@ -30,7 +30,7 @@ public class AuthenticationService {
         return keycloakService.refreshGrant(request.refreshToken());
     }
 
-    // Keycloak user first, then the user-management record synchronously (ADR 0010), keyed by the Keycloak id.
+    // Keycloak user first, then the user-management record synchronously, keyed by the Keycloak id.
     // If CreateUser fails the Keycloak user is deleted again so the sign-up can be retried.
     public void signUp(LoginRequest request) {
         String userId = keycloakService.createUser(KeycloakUser.newUser(request.email(), request.password()));

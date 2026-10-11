@@ -14,7 +14,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    // TODO: role mapping between Keycloak realm roles and this record is still open (ADR 0011)
+    // TODO: role mapping between Keycloak realm roles and this record is still open
     static final String DEFAULT_ROLE = "customer";
 
     private final UserRepository userRepository;
@@ -34,6 +34,6 @@ public class UserService {
             .build());
         log.info("Created user {}", keycloakUserId);
 
-        // TODO: write UserRegistered to the outbox in this transaction once the event payload is defined (events.md)
+        // TODO: write UserRegistered to the outbox in this transaction once the event payload is defined
     }
 }

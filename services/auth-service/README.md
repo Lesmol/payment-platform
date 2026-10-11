@@ -1,8 +1,8 @@
 # auth-service
 
-See [docs/services/auth-service.md](../../docs/services/auth-service.md) for purpose, ownership, topics and open TODOs.
+Thin wrapper around Keycloak and the only service that talks to it: login, refresh, sign-up, and internal gRPC user lookups.
 
-Standalone project: own build, own Dockerfile, no shared code with other services (ADR 0001).
+Standalone project: own build, own Dockerfile, no shared code with other services.
 
 ## Run locally
 Runs in the root compose stack with the `local` profile (`application-local.yaml`):

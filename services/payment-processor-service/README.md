@@ -1,8 +1,8 @@
 # payment-processor-service
 
-See [docs/services/payment-processor-service.md](../../docs/services/payment-processor-service.md) for purpose, ownership, topics and open TODOs.
+The Kafka consumer that executes single payments. No public API.
 
-Standalone project: own build, own Dockerfile, no shared code with other services (ADR 0001).
+Standalone project: own build, own Dockerfile, no shared code with other services.
 
 ## Run locally
 Runs in the root compose stack with the `local` profile (`application-local.yaml`):

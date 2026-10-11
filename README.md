@@ -1,14 +1,11 @@
 # payment-platform
 
-A Kafka-based payments platform. Browser -> Spring Cloud Gateway -> services over gRPC (sync) and Kafka (events). Auth is Keycloak (ADR 0011).
+A Kafka-based payments platform. Browser -> Spring Cloud Gateway -> services over gRPC (sync) and Kafka (events). Auth is Keycloak.
 
-The monorepo is for **organisation only**: every service under `services/` is a standalone project with its own build, Dockerfile and database. No shared code (ADR 0001).
-
-Start with [docs/README.md](docs/README.md).
+The monorepo is for **organisation only**: every service under `services/` is a standalone project with its own build, Dockerfile and database. No shared code.
 
 ## Layout
 ```
-docs/                      architecture, events, API, ADRs, per-service docs
 services/
   gateway/                 Spring Cloud Gateway (WebFlux), edge auth          :8080
   auth-service/            thin Keycloak wrapper, gRPC client + server        :8081 / gRPC 9081
@@ -21,13 +18,13 @@ services/
   bulk-processor/          Rust (cargo); inbox + outbox
 infra/                     Postgres init + replica, Kafka topic creation
 frontend/                  placeholder
-docker-compose.yml         the whole local stack (ADR 0008)
+docker-compose.yml         the whole local stack
 ```
 
 Each producer owns its contracts in `services/<service>/contracts/`. A consumer copies the file into its own `src/main/protobuf/` (never imports it).
 
 ## Stack
-- Java 25, Spring Boot 4.1.1 on every service (gateway adds Spring Cloud 2025.1.3, which supports Boot 4.0-4.1), Maven per service; root `pom.xml` is an aggregator only (ADR 0001)
+- Java 25, Spring Boot 4.1.1 on every service (gateway adds Spring Cloud 2025.1.3, which supports Boot 4.0-4.1), Maven per service; root `pom.xml` is an aggregator only
 - Spring for Apache Kafka, Spring gRPC (Boot starters), Spring Data JPA, Flyway, PostgreSQL 18
 - Rust 2024 edition: tokio, rdkafka, sqlx
 - Kafka 4.3 (KRaft), Keycloak 26.7, Mailpit for local email
@@ -37,7 +34,7 @@ Each producer owns its contracts in `services/<service>/contracts/`. A consumer 
 cp .env.example .env
 ```
 
-Keycloak imports the `payments` realm (`infra/keycloak/realms/payments-realm.json`) on first start, and Postgres creates the `keycloak` database only when its volume is new. If you ran the stack before the switch from Supabase, reset Postgres once with `docker compose down -v`.
+Keycloak imports the `payments` realm (`infra/keycloak/realms/payments-realm.json`) on first start, and Postgres creates the `keycloak` database only when its volume is new. If your Postgres volume was created before the `keycloak` database existed, reset it once with `docker compose down -v`.
 
 Infra only (run the services from your IDE or `mvn spring-boot:run` / `cargo run`):
 ```bash
@@ -71,7 +68,7 @@ Ports are the same everywhere (host and compose network); only the gateway is pu
 | fraud-service | 8087 | |
 
 ### External REST APIs
-auth-service calls Keycloak over REST (no admin-client SDK): `app.keycloak.base-url` (local `http://keycloak:8180`), realm `payments`, confidential client `auth-service`. The gateway validates tokens against the realm JWKS (`KEYCLOAK_JWKS_URI`). See [docs/services/auth-service.md](docs/services/auth-service.md).
+auth-service calls Keycloak over REST (no admin-client SDK): `app.keycloak.base-url` (local `http://keycloak:8180`), realm `payments`, confidential client `auth-service`. The gateway validates tokens against the realm JWKS (`KEYCLOAK_JWKS_URI`).
 
 Gateway routes are under `spring.cloud.gateway.server.webflux.routes`: `/api/auth/**`, `/api/users/**`, `/api/accounts/**`, `/api/payments/**`. Base config takes each target from an env var (`AUTH_SERVICE_URI`, `USER_MANAGEMENT_SERVICE_URI`, `ACCOUNT_SERVICE_URI`, `PAYMENT_SERVICE_URI`); the local profile defaults them to the compose hostnames.
 
@@ -94,9 +91,9 @@ cd services/bulk-processor && cargo build
 
 CI runs one workflow per service, triggered only by changes under that service's folder (`.github/workflows/`).
 
-## What's scaffolded vs. yours to build
-Scaffolded: build files with dependencies, Dockerfiles, `application.yaml` config, Flyway/sqlx migrations for the `outbox`/`inbox` tables (schema from docs/events.md), empty `outbox/` and `inbox/` packages, proto contracts with the agreed `CreateUser` RPC (message fields left empty), compose stack.
+## What's scaffolded vs. built
+Scaffolded: build files with dependencies, Dockerfiles, `application.yaml` config, Flyway/sqlx migrations for the `outbox`/`inbox` tables, empty `outbox/` and `inbox/` packages, proto contracts with the agreed `CreateUser` RPC (message fields left empty), compose stack.
 
-Not implemented: all application code (relays, consumers, controllers, gRPC services, gateway routes and security config, business tables).
+Implemented so far: Keycloak auth (gateway token validation and route security; auth-service login, refresh, sign-up and internal `GetUser`/`ListUsers`), user-management `CreateUser`. Not implemented yet: outbox relays, Kafka consumers, payments, accounts, notifications and the frontend.
 
 Note: the gateway includes the OAuth2 resource-server starter, so until you add a `SecurityWebFilterChain` Spring Security's defaults protect every route.

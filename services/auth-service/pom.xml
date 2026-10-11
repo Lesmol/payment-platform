@@ -13,7 +13,7 @@
     <artifactId>auth-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>auth-service</name>
-    <description>Authentication service; auth provider is Keycloak (ADR 0011), integration TBD</description>
+    <description>Authentication service wrapping Keycloak: login, refresh, sign-up and internal user lookups</description>
 
     <properties>
         <java.version>25</java.version>

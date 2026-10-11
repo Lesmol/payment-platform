@@ -11,7 +11,7 @@ create() {
 create user.events
 create payments.received
 
-# TODO: topic names still to be decided (docs/events.md):
+# TODO: topic names still to be decided:
 #   - payment made / confirmed / failed (payment-processor-service)
 #   - bulk topic (payment-service -> bulk-processor), keyed by batch id
 #   - bulk outcomes (bulk-processor)

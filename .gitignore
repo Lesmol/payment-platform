@@ -18,3 +18,7 @@ services/bulk-processor/target/
 .env.*
 !.env.example
 !services/bulk-processor/.env.local
+
+# Development-only (kept locally, not tracked)
+.claude/
+docs/

@@ -8,7 +8,7 @@ spring:
     gateway:
       server:
         webflux:
-          # TODO: admin routes; confirm SSE streams through unbuffered (ADR 0008)
+          # TODO: admin routes; confirm SSE streams through unbuffered
           routes:
             - id: auth-service
               uri: ${AUTH_SERVICE_URI}
@@ -30,7 +30,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          # Keycloak realm JWKS: <base>/realms/<realm>/protocol/openid-connect/certs (ADR 0011)
+          # Keycloak realm JWKS: <base>/realms/<realm>/protocol/openid-connect/certs
           jwk-set-uri: ${KEYCLOAK_JWKS_URI}
 
 server:

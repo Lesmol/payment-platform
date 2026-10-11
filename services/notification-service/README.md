@@ -1,8 +1,8 @@
 # notification-service
 
-See [docs/services/notification-service.md](../../docs/services/notification-service.md) for purpose, ownership, topics and open TODOs.
+Email notifications only (no push), e.g. payment outcomes, invalid payment dates, reset-password emails.
 
-Standalone project: own build, own Dockerfile, no shared code with other services (ADR 0001).
+Standalone project: own build, own Dockerfile, no shared code with other services.
 
 ## Run locally
 Runs in the root compose stack with the `local` profile (`application-local.yaml`):
