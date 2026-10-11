@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/payment/v1")
+@RequestMapping("api/payments/v1")
 @RequiredArgsConstructor
 public class PaymentController {
     private final BulkPaymentService bulkPaymentService;
