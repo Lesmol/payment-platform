@@ -1,0 +1,28 @@
+name: bulk-processor
+
+on:
+  push:
+    branches: [main]
+    paths: ["services/bulk-processor/**", ".github/workflows/bulk-processor.yml"]
+  pull_request:
+    paths: ["services/bulk-processor/**", ".github/workflows/bulk-processor.yml"]
+
+defaults:
+  run:
+    working-directory: services/bulk-processor
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: services/bulk-processor
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets -- -D warnings
+      - run: cargo test
+      - run: docker build -t bulk-processor:ci .

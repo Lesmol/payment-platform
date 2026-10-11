@@ -1,0 +1,26 @@
+name: payment-processor-service
+
+on:
+  push:
+    branches: [main]
+    paths: ["services/payment-processor-service/**", ".github/workflows/payment-processor-service.yml"]
+  pull_request:
+    paths: ["services/payment-processor-service/**", ".github/workflows/payment-processor-service.yml"]
+
+defaults:
+  run:
+    working-directory: services/payment-processor-service
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+          cache-dependency-path: services/payment-processor-service/pom.xml
+      - run: mvn -B verify
+      - run: docker build -t payment-processor-servicei .
