@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package lvmp.auth.v1;
+
+option java_multiple_files = true;
+option java_package = "com.lvmp.authservice.grpc.v1";
+
+import "google/protobuf/timestamp.proto";
+
+service AuthService {
+  rpc GetUser(GetUserRequest) returns (User);
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message ListUsersRequest {
+  int32 offset = 1;
+  int32 limit = 2;
+  string search = 3;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+  int32 total = 2;
+}
+
+message User {
+  string id = 1;
+  string email = 2;
+  string first_name = 3;
+  string last_name = 4;
+  bool enabled = 5;
+  bool email_verified = 6;
+  google.protobuf.Timestamp created_at = 7;
+}

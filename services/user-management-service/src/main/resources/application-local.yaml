@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/user_management
+    username: user_management
+    password: ${SERVICE_DB_PASSWORD:localdev}
+  jpa:
+    show-sql: true
+  kafka:
+    bootstrap-servers: kafka:9092
+  grpc:
+    client:
+      channel:
+        auth-service:
+          target: static://auth-service:9081
+
+logging:
+  level:
+    com.lvmp: DEBUG

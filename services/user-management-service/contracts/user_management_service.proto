@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package lvmp.usermanagement.v1;
+
+option java_multiple_files = true;
+option java_package = "com.lvmp.usermanagement.grpc.v1";
+
+service UserManagementService {
+  // Called by auth-service right after Keycloak created the user (ADR 0010). Idempotent:
+  // calling it again for an existing user is a no-op. INVALID_ARGUMENT if the id is not a UUID.
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+}
+
+// Never a password.
+message CreateUserRequest {
+  // Keycloak user id (UUID, also the access token `sub`); used as the platform user id.
+  string keycloak_user_id = 1;
+}
+
+message CreateUserResponse {
+}
