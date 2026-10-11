@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: gateway
+  threads:
+    virtual:
+      enabled: true
+  cloud:
+    gateway:
+      server:
+        webflux:
+          # TODO: admin routes; confirm SSE streams through unbuffered (ADR 0008)
+          routes:
+            - id: auth-service
+              uri: ${AUTH_SERVICE_URI}
+              predicates:
+                - Path=/api/auth/**
+            - id: user-management-service
+              uri: ${USER_MANAGEMENT_SERVICE_URI}
+              predicates:
+                - Path=/api/users/**
+            - id: account-service
+              uri: ${ACCOUNT_SERVICE_URI}
+              predicates:
+                - Path=/api/accounts/**
+            - id: payment-service
+              uri: ${PAYMENT_SERVICE_URI}
+              predicates:
+                - Path=/api/payments/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Keycloak realm JWKS: <base>/realms/<realm>/protocol/openid-connect/certs (ADR 0011)
+          jwk-set-uri: ${KEYCLOAK_JWKS_URI}
+
+server:
+  port: ${SERVER_PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true

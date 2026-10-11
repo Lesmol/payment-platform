@@ -1,0 +1,31 @@
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth-service
+              uri: ${AUTH_SERVICE_URI:http://auth-service:8081}
+              predicates:
+                - Path=/api/auth/**
+            - id: user-management-service
+              uri: ${USER_MANAGEMENT_SERVICE_URI:http://user-management-service:8082}
+              predicates:
+                - Path=/api/users/**
+            - id: account-service
+              uri: ${ACCOUNT_SERVICE_URI:http://account-service:8083}
+              predicates:
+                - Path=/api/accounts/**
+            - id: payment-service
+              uri: ${PAYMENT_SERVICE_URI:http://payment-service:8084}
+              predicates:
+                - Path=/api/payments/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://keycloak:8180/realms/payments/protocol/openid-connect/certs
+
+logging:
+  level:
+    com.lvmp: DEBUG
