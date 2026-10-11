@@ -1,0 +1,53 @@
+{
+  "realm": "payments",
+  "enabled": true,
+  "registrationAllowed": false,
+  "registrationEmailAsUsername": true,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "verifyEmail": false,
+  "resetPasswordAllowed": true,
+  "passwordPolicy": "length(8)",
+  "smtpServer": {
+    "host": "mailpit",
+    "port": "1025",
+    "from": "auth@payment-platform.local",
+    "fromDisplayName": "Payments Platform"
+  },
+  "roles": {
+    "realm": [
+      { "name": "customer", "description": "Platform customer" },
+      { "name": "admin", "description": "Platform administrator" },
+      {
+        "name": "default-roles-payments",
+        "composite": true,
+        "composites": { "realm": ["offline_access", "uma_authorization", "customer"] }
+      }
+    ]
+  },
+  "defaultRole": { "name": "default-roles-payments" },
+  "clients": [
+    {
+      "clientId": "auth-service",
+      "name": "auth-service",
+      "description": "Backend client used by auth-service: password/refresh grants for users, service account for the Admin API",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "local-auth-service-secret",
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true
+    }
+  ],
+  "users": [
+    {
+      "username": "service-account-auth-service",
+      "enabled": true,
+      "serviceAccountClientId": "auth-service",
+      "clientRoles": { "realm-management": ["manage-users", "view-users"] }
+    }
+  ]
+}
