@@ -14,7 +14,6 @@ import java.io.Reader;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 
-// File-level checks only (present, .csv, readable header); rows are validated and flagged by the service
 public class CsvFileValidator implements ConstraintValidator<ValidCsvFile, MultipartFile> {
     private static final CSVFormat FORMAT = CSVFormat.DEFAULT.builder()
         .setHeader()
@@ -29,7 +28,6 @@ public class CsvFileValidator implements ConstraintValidator<ValidCsvFile, Multi
             return false;
         }
 
-        // BOMInputStream drops the byte-order mark Excel adds, so the first header name stays clean
         try (Reader reader = new InputStreamReader(
                 BOMInputStream.builder().setInputStream(file.getInputStream()).get(), StandardCharsets.UTF_8);
              CSVParser parser = FORMAT.parse(reader)) {
