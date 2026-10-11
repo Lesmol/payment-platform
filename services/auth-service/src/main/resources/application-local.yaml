@@ -1,0 +1,17 @@
+spring:
+  grpc:
+    client:
+      channel:
+        user-management:
+          target: static://user-management-service:9082
+
+app:
+  keycloak:
+    base-url: http://keycloak:8180
+    realm: payments
+    client-id: auth-service
+    client-secret: ${KEYCLOAK_CLIENT_SECRET:local-auth-service-secret}
+
+logging:
+  level:
+    com.lvmp: DEBUG
