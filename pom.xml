@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Aggregator only: lets IDEs and `mvn` at the repo root discover every Java service.
+         Each service keeps spring-boot-starter-parent as its own parent. -->
+    <groupId>com.lvmp</groupId>
+    <artifactId>payment-platform</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>services/account-service</module>
+        <module>services/auth-service</module>
+        <module>services/fraud-service</module>
+        <module>services/gateway</module>
+        <module>services/notification-service</module>
+        <module>services/payment-processor-service</module>
+        <module>services/payment-service</module>
+        <module>services/user-management-service</module>
+    </modules>
+</project>
