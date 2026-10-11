@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/fraud
+    username: fraud
+    password: ${SERVICE_DB_PASSWORD:localdev}
+  jpa:
+    show-sql: true
+  kafka:
+    bootstrap-servers: kafka:9092
+
+logging:
+  level:
+    com.lvmp: DEBUG

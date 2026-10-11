@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package lvmp.account.v1;
+
+option java_multiple_files = true;
+option java_package = "com.lvmp.accountservice.grpc.v1";
+
+service AccountService {
+  // TODO: RPCs (gRPC surface not decided yet, see docs/services/account-service.md)
+}

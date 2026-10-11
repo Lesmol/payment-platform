@@ -1,0 +1,12 @@
+# bulk-processor
+
+See [docs/services/bulk-processor.md](../../docs/services/bulk-processor.md) for purpose, ownership, topics and open TODOs.
+
+Standalone project: own build, own Dockerfile, no shared code with other services (ADR 0001).
+
+## Run locally
+Runs in the root compose stack with `.env.local`:
+
+```bash
+docker compose up -d --build bulk-processor
+```
