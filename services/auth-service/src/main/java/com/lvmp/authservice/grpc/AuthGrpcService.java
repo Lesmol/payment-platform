@@ -1,11 +1,11 @@
 package com.lvmp.authservice.grpc;
 
 import com.google.protobuf.Timestamp;
-import com.lvmp.authservice.grpc.v1.AuthServiceGrpc;
-import com.lvmp.authservice.grpc.v1.GetUserRequest;
-import com.lvmp.authservice.grpc.v1.ListUsersRequest;
-import com.lvmp.authservice.grpc.v1.ListUsersResponse;
-import com.lvmp.authservice.grpc.v1.User;
+import com.lvmp.domaincontracts.grpc.auth.v1.AuthServiceGrpc;
+import com.lvmp.domaincontracts.grpc.auth.v1.GetUserRequest;
+import com.lvmp.domaincontracts.grpc.auth.v1.ListUsersRequest;
+import com.lvmp.domaincontracts.grpc.auth.v1.ListUsersResponse;
+import com.lvmp.domaincontracts.grpc.auth.v1.User;
 import com.lvmp.authservice.model.keycloak.KeycloakUser;
 import com.lvmp.authservice.service.UserService;
 import com.lvmp.authservice.service.UserService.UserPage;

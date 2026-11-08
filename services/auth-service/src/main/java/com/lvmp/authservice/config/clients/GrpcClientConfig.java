@@ -1,6 +1,6 @@
 package com.lvmp.authservice.config.clients;
 
-import com.lvmp.usermanagement.grpc.v1.UserManagementServiceGrpc;
+import com.lvmp.domaincontracts.grpc.usermanagement.v1.UserManagementServiceGrpc;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.grpc.client.GrpcChannelFactory;

@@ -7,7 +7,7 @@ A learning project: an event-driven payments platform built as a set of independ
 The goal is to practise the patterns a real payments backend needs, end to end, rather than a CRUD app:
 
 - **Reliable messaging without distributed transactions.** Every service that publishes writes its business change and an *outbox* row in one local transaction; a relay publishes the row to Kafka. Delivery is at-least-once, so every consumer deduplicates through an *inbox* table in the same transaction as its effect.
-- **Microservice boundaries that are actually independent.** The repo is a monorepo for organisation only: each service has its own build, Dockerfile and Postgres database, with no shared code. Services talk over the network only: gRPC for synchronous calls, Kafka for events. Each producer owns its contracts.
+- **Microservice boundaries that are actually independent.** The repo is a monorepo for organisation only: each service has its own build, Dockerfile and Postgres database, sharing only the `services/domain-contracts` library (protos and event records, no logic). Services talk over the network only: gRPC for synchronous calls, Kafka for events.
 - **Payments-shaped problems.** Payment status tracking, compensating events instead of rollbacks, bulk batches where invalid rows are flagged and valid ones continue, failed items recorded and never silently reprocessed, and live progress over SSE.
 - **Real authentication.** Keycloak issues tokens and manages users; the gateway validates every request; platform users are linked to Keycloak by the Keycloak user id.
 - **A polyglot service.** Bulk batches are processed by a Rust service (tokio, rdkafka, sqlx) that implements its own inbox and outbox.
@@ -69,7 +69,7 @@ frontend/                    placeholder
 docker-compose.yml           the whole local stack
 ```
 
-Each producer owns its contracts in `services/<service>/contracts/`. A consumer copies the file into its own `src/main/protobuf/` (never imports it).
+All protos and event records live in `services/domain-contracts`; services add it as a Maven dependency instead of copying files.
 
 ## 🛠️ Tech Stack
 

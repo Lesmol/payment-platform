@@ -3,7 +3,7 @@ syntax = "proto3";
 package lvmp.usermanagement.v1;
 
 option java_multiple_files = true;
-option java_package = "com.lvmp.usermanagement.grpc.v1";
+option java_package = "com.lvmp.domaincontracts.grpc.usermanagement.v1";
 
 service UserManagementService {
   // Called by auth-service right after Keycloak created the user. Idempotent:

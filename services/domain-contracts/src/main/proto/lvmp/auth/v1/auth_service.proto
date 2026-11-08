@@ -3,7 +3,7 @@ syntax = "proto3";
 package lvmp.auth.v1;
 
 option java_multiple_files = true;
-option java_package = "com.lvmp.authservice.grpc.v1";
+option java_package = "com.lvmp.domaincontracts.grpc.auth.v1";
 
 import "google/protobuf/timestamp.proto";
 

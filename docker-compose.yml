@@ -123,7 +123,9 @@ services:
         condition: service_healthy
 
   auth-service:
-    build: ./services/auth-service
+    build:
+      context: ./services
+      dockerfile: auth-service/Dockerfile
     restart: unless-stopped
     environment:
       <<: *local-env
@@ -134,23 +136,33 @@ services:
 
   user-management-service:
     <<: *spring-service
-    build: ./services/user-management-service
+    build:
+      context: ./services
+      dockerfile: user-management-service/Dockerfile
 
   account-service:
     <<: *spring-service
-    build: ./services/account-service
+    build:
+      context: ./services
+      dockerfile: account-service/Dockerfile
 
   payment-service:
     <<: *spring-service
-    build: ./services/payment-service
+    build:
+      context: ./services
+      dockerfile: payment-service/Dockerfile
 
   payment-processor-service:
     <<: *spring-service
-    build: ./services/payment-processor-service
+    build:
+      context: ./services
+      dockerfile: payment-processor-service/Dockerfile
 
   notification-service:
     <<: *spring-service
-    build: ./services/notification-service
+    build:
+      context: ./services
+      dockerfile: notification-service/Dockerfile
     depends_on:
       <<: *data-deps
       mailpit:
@@ -159,7 +171,9 @@ services:
   fraud-service:
     <<: *spring-service
     profiles: ["fraud"]
-    build: ./services/fraud-service
+    build:
+      context: ./services
+      dockerfile: fraud-service/Dockerfile
 
   bulk-processor:
     build: ./services/bulk-processor

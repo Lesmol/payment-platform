@@ -2,7 +2,7 @@
 
 The Kafka consumer that executes single payments. No public API.
 
-Standalone project: own build, own Dockerfile, no shared code with other services.
+Standalone project: own build, own Dockerfile, no shared code with other services except the `domain-contracts` library.
 
 ## Run locally
 Runs in the root compose stack with the `local` profile (`application-local.yaml`):

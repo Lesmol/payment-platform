@@ -1,8 +1,8 @@
 package com.lvmp.usermanagement.grpc;
 
-import com.lvmp.usermanagement.grpc.v1.CreateUserRequest;
-import com.lvmp.usermanagement.grpc.v1.CreateUserResponse;
-import com.lvmp.usermanagement.grpc.v1.UserManagementServiceGrpc;
+import com.lvmp.domaincontracts.grpc.usermanagement.v1.CreateUserRequest;
+import com.lvmp.domaincontracts.grpc.usermanagement.v1.CreateUserResponse;
+import com.lvmp.domaincontracts.grpc.usermanagement.v1.UserManagementServiceGrpc;
 import com.lvmp.usermanagement.service.UserService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
